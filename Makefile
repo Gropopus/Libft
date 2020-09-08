@@ -6,7 +6,7 @@
 #    By: thsembel <thsembel@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/09/08 00:33:14 by thsembel          #+#    #+#              #
-#    Updated: 2020/09/08 01:25:55 by thsembel         ###   ########.fr        #
+#    Updated: 2020/09/08 19:22:23 by thsembel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,9 +49,22 @@ SRCS		= 		${SRC_DIR}ft_atoi.c\
 					${SRC_DIR}ft_tolower.c\
 					${SRC_DIR}ft_toupper.c\
 
+SRCS_BONUS =		$(SRC_DIR)ft_lstnew_bonus.c\
+					$(SRC_DIR)ft_lstadd_front_bonus.c\
+					$(SRC_DIR)ft_lstsize_bonus.c\
+					$(SRC_DIR)ft_lstlast_bonus.c\
+					$(SRC_DIR)ft_lstadd_back_bonus.c\
+					$(SRC_DIR)ft_lstdelone_bonus.c\
+					$(SRC_DIR)ft_lstclear_bonus.c\
+					$(SRC_DIR)ft_lstiter_bonus.c\
+					${SRC_DIR}ft_lstmap_bonus.c
+
 HEAD		=		${HEAD_DIR}libft.h
 
 OBJS		= ${SRCS:.c=.o}
+
+OBJS_BONUS	= $(SRCS:.c=.o)\
+				$(SRCS_BONUS:.c=.o)
 
 NAME		= libft.a
 
@@ -67,10 +80,16 @@ CFLAGS		= -Wall -Wextra -Werror
 ${NAME}:	${OBJS}
 			ar -rc libft.a ${OBJS}
 
+bonus:
+			$(CC) $(CFLAGS) $(SRCS_BONUS) -I${HEAD_DIR} -c ${<:.c=.o}
+			-mv *.o ${SRC_DIR}
+			ar rc $(NAME) $(OBJS_BONUS)
+			ranlib $(NAME)
+
 all:		${NAME}
 
 clean:
-			${RM} ${OBJS}
+			${RM} ${OBJS} ${OBJS_BONUS}
 
 fclean:		clean
 			${RM} ${NAME}
